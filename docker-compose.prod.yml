@@ -10,7 +10,7 @@ services:
       - "80:80"
     depends_on:
       - app
-    container_name: cicd_nginx
+    container_name: cicd_nginx_prod
 
   app:
     build:
@@ -20,7 +20,7 @@ services:
       - ./:/var/www/
     depends_on:
       - db
-    container_name: cicd_app
+    container_name: cicd_app_prod
 
   db:
     image: mysql:8.0
@@ -33,7 +33,7 @@ services:
     ports:
       - 8101:3306
     command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
-    container_name: cicd_db
+    container_name: cicd_db_prod
 
   phpmyadmin:
     depends_on:
