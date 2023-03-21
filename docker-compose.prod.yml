@@ -6,11 +6,15 @@ services:
     volumes:
       - ./:/var/www/
       - ./_docker/nginx/conf.d/:/etc/nginx/conf.d/
+      - ./_docker/data/certbot/conf:/etc/letsencrypt
+      - ./_docker/data/certbot/www:/var/www/certbot
     ports:
       - "80:80"
+      - "443:443"
     depends_on:
       - app
     container_name: cicd_nginx_prod
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 
   app:
     build:
